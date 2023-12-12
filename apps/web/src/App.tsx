@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouteObject, useRoutes } from 'react-router-dom'
 import { Layout } from '@/components/Layout.tsx'
 import { Home } from '@/components/Home.tsx'
+import { Wallet } from '@/components/Wallet.tsx'
 
 const queryClient = new QueryClient()
 
@@ -24,7 +25,9 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {element}
+      <Wallet>
+        {element}
+      </Wallet>
     </QueryClientProvider>
   )
 }
