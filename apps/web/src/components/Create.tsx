@@ -1,11 +1,14 @@
-import { useCallback, useState } from 'react'
+import { ChangeEvent, useCallback, useState } from 'react'
 import { shortenAddress } from '@/utils/shortenAddress.tsx'
+import { useWallet } from '@demox-labs/aleo-wallet-adapter-react'
+import { Transaction, Transition } from '@demox-labs/aleo-wallet-adapter-base'
 
 export function Create() {
+  const { publicKey, requestTransaction } = useWallet()
   const [addresses, setAddresses] = useState<string[]>([])
   const [pairs, setPairs] = useState<string[][]>([])
 
-  const onTextAreaChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onTextAreaChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value
 
     const addresses = value.split('\n').filter(isValidAleoAddress)
@@ -27,24 +30,58 @@ export function Create() {
     setPairs(pairs)
   }, [addresses])
 
+  const createSecretSantaRecords = useCallback(async () => {
+    if (!publicKey || !requestTransaction) return
+
+    const transitions = pairs.map((pair) => {
+      const inputs = [pair[0], pair[1]]
+      return new Transition('secret_santa_v001.aleo', 'add_gift_tag', inputs)
+    })
+
+    const fee = transitions.length * 100_000
+
+    const transaction = new Transaction(publicKey, 'secret_santa_v001.aleo', transitions, fee)
+
+    const response = await requestTransaction(transaction)
+
+    alert('TX response:\n' + response)
+  }, [pairs, publicKey, requestTransaction])
+
+  const isValid = validateSecretSantaPairs(pairs) && publicKey
+
   return <div>
     <p className="text-xl text-white">Create a secret santa game by providing list of addresses below.</p>
     <p className="text-white">Each address on new line!</p>
     <p className="text-white">Add your own address if you wish to participate!</p>
     <textarea onChange={onTextAreaChange}
               className="flex rounded w-full h-full min-h-[200px] my-2 p-4 bg-slate-400 text-slate-700 font-mono"></textarea>
-    <button onClick={createSecretSantaPairs} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Create pairs
+    <button onClick={createSecretSantaPairs} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Randomize
+      pairs
     </button>
-    <p className="text-white">Result:</p>
-    <ul className="text-white">
-      {pairs.map((pair, index) => {
-          return <li key={index}>
-            <span className="font-mono">{shortenAddress(pair[0])} ➡️ {shortenAddress(pair[1])}</span> {pair[0] !== pair[1] ? '✅' : '❌'}
-          </li>
-        }
-      )}
-    </ul>
+    <div className="my-4">
+      <p className="text-white">Result:</p>
+      <ul className="text-white">
+        {pairs.map((pair, index) => {
+            return <li className="list-disc ml-8" key={index}>
+              <span className="font-mono">{shortenAddress(pair[0])} ➡️ {shortenAddress(pair[1])}</span> {pair[0] !== pair[1] ? '✅' : '❌'}
+            </li>
+          },
+        )}
+      </ul>
+    </div>
+    <button disabled={!isValid}
+            onClick={createSecretSantaRecords}
+            className="bg-blue-500 hover:bg-blue-600 disabled:bg-neutral-700 text-white font-bold py-2 px-4 rounded">
+      Create Secret Santa records
+    </button>
   </div>
+}
+
+const validateSecretSantaPairs = (pairs: string[][]) => {
+  if (pairs.length === 0) return false
+  return pairs.every((pair) => {
+    return pair[0] !== pair[1]
+  })
 }
 
 const isValidAleoAddress = (address: string) => {
