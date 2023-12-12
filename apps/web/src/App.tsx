@@ -1,7 +1,4 @@
 import "@demox-labs/aleo-wallet-adapter-reactui/styles.css"
-
-import { PuzzleWalletPlayground } from '@/components/Puzzle/PuzzleWalletPlayground.tsx'
-import { LeoWalletPlayground } from '@/components/LeoWallet/LeoWalletPlayground.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouteObject, useRoutes } from 'react-router-dom'
 import { Layout } from '@/components/Layout.tsx'
