@@ -1,0 +1,7 @@
+{
+  "name": "secret_santa_v001",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "leo build"
+  }
+}
