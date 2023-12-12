@@ -4,6 +4,7 @@ import { RouteObject, useRoutes } from 'react-router-dom'
 import { Layout } from '@/components/Layout.tsx'
 import { Home } from '@/components/Home.tsx'
 import { Wallet } from '@/components/Wallet.tsx'
+import { Create } from '@/components/Create.tsx'
 
 const queryClient = new QueryClient()
 
@@ -15,6 +16,9 @@ const router: RouteObject[] = [
       {
         index: true,
         element: <Home />,
+      }, {
+        path: "create",
+        element: <Create />,
       },
     ],
   },
