@@ -8,7 +8,7 @@ const queryClient = new QueryClient()
 
 const router: RouteObject[] = [
   {
-    path: "/aleo-playground/",
+    path: "/",
     element: <Layout />,
     children: [
       {

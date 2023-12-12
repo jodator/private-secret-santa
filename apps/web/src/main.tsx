@@ -4,7 +4,7 @@ import App from '@/App.tsx'
 import './index.css'
 
 import { configureConnection } from '@puzzlehq/sdk'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 configureConnection({
   dAppName: 'Aleo Playground',
@@ -15,8 +15,8 @@ configureConnection({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>,
 )

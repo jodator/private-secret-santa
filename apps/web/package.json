@@ -9,6 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "homepage": "https://jodator.github.io/private-secret-santa/",
   "dependencies": {
     "@demox-labs/aleo-wallet-adapter-base": "^0.0.20",
     "@demox-labs/aleo-wallet-adapter-leo": "^0.0.19",
