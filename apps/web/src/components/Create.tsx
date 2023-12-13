@@ -57,7 +57,7 @@ export function Create() {
         <p className="text-xl text-white">Transaction sent! 🎊</p>
         <p className="text-white">Confirmation ID: {confirmationId}</p>
         <p className="text-white">
-          You can go to the Secret Santa Dashboard page: <NavLink to={`dashboard/${publicKey}`} />
+          You can go to the <NavLink className="text-blue-500 hover:text-blue-300" to={`/dashboard/${publicKey}`}>Secret Santa Dashboard page</NavLink>
         </p>
       </div>
     )
