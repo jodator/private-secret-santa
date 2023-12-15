@@ -19,7 +19,7 @@ export const Wallet: FC<{ children: ReactNode }> = ({ children }) => {
       wallets={wallets}
       decryptPermission={DecryptPermission.OnChainHistory}
       network={WalletAdapterNetwork.Testnet}
-      programs={['secret_santa_v001']}
+      programs={['secret_santa_v001.aleo']}
       autoConnect
     >
       <WalletModalProvider>

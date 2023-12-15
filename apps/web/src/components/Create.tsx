@@ -3,6 +3,7 @@ import { shortenAddress } from '@/utils/shortenAddress.tsx'
 import { useWallet } from '@demox-labs/aleo-wallet-adapter-react'
 import { Transaction, Transition, WalletAdapterNetwork } from '@demox-labs/aleo-wallet-adapter-base'
 import { NavLink } from 'react-router-dom'
+import { programName } from '@/config.ts'
 
 export function Create() {
   const { publicKey, requestTransaction } = useWallet()
@@ -37,10 +38,10 @@ export function Create() {
 
     const transitions = pairs.map((pair) => {
       const inputs = [pair[0], pair[1]]
-      return new Transition('secret_santa_v001.aleo', 'add_gift_tag', inputs)
+      return new Transition(programName, 'add_gift_tag', inputs)
     })
 
-    const fee = transitions.length * 100_000
+    const fee = transitions.length * 3_000_000
 
     const transaction = new Transaction(publicKey, WalletAdapterNetwork.Testnet, transitions, fee)
 

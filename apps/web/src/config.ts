@@ -1,0 +1,1 @@
+export const programName = 'secret_santa_v001.aleo'
